@@ -36,10 +36,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public Optional<Book> save(String name, BookCategory bookCategory, Long authorId, int availableCopies) {
         Author author=this.authorRepository.findById(authorId).get();
-        this.bookRepository.deleteByName(name);
+//        this.bookRepository.deleteByName(name);
         Book book=new Book(name,bookCategory,author,availableCopies);
         this.bookRepository.save(book);
         return Optional.of(book);
@@ -49,7 +48,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Optional<Book> save(BookDto bookDto) {
         Author author=this.authorRepository.findById(bookDto.getAuthorId()).get();
-        this.bookRepository.deleteByName(bookDto.getName());
+//        this.bookRepository.deleteByName(bookDto.getName());
         Book book=new Book(bookDto.getName(),bookDto.getBookCategory(),author, bookDto.getAvailableCopies());
         this.bookRepository.save(book);
         return Optional.of(book);

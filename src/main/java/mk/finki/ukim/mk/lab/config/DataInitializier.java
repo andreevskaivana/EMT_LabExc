@@ -36,5 +36,14 @@ public class DataInitializier {
 
             bookRepository.save(new Book("BookName: " + i, BookCategory.DRAMA, authors.get(i - 1), 5));
         }
+        for (int i = 5; i <= 10; i++) {
+            countryRepository.save(new Country("Country " + i, "Contient: " + i));
+            List<Country> countries = countryRepository.findAll();
+
+            authorRepository.save(new Author("AuthorName: " + i, "Author surname: " + i, countries.get(i - 1)));
+            List<Author> authors = authorRepository.findAll();
+
+            bookRepository.save(new Book("BookName: " + i, BookCategory.NOVEL, authors.get(i - 1), 5));
+        }
     }
 }

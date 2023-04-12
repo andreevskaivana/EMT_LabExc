@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping({"/","/authors"})
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/authors")
 public class AuthorRestController {
     private final AuthorService authorService;
     private final CountryService countryService;

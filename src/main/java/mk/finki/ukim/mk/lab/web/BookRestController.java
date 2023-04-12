@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping({"/","/books"})
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping({"/","/api/books"})
 
 public class BookRestController {
     private final BookService bookService;
@@ -31,24 +32,32 @@ public class BookRestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Book> save(@RequestBody BookDto bookDto) {
-        return this.bookService.save(bookDto)
+    public ResponseEntity<Book> save(@RequestBody BookDto booksDto) {
+        return this.bookService.save(booksDto)
                 .map(book -> ResponseEntity.ok().body(book))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    @PostMapping("/edit/{id}")
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<Book> save(@PathVariable Long id, @RequestBody BookDto bookDto) {
         return this.bookService.edit(id, bookDto)
                 .map(book -> ResponseEntity.ok().body(book))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    @PostMapping("/delete/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Book> deleteById(@PathVariable Long id) {
         if(this.bookService.findById(id).isEmpty()) return ResponseEntity.notFound().build();
         this.bookService.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+    @PutMapping("/mark/{id}")
+    public ResponseEntity<Book> availableCopies(@PathVariable Long id){
+        return this.bookService.availableCopies(id).map(book -> ResponseEntity.ok().body(book))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
 
